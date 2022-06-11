@@ -52,7 +52,6 @@ const App = () => {
         </header>
 
         <main>
-          PublicKey: {publicKey ? publicKey.toString() : 0}
           {publicKey ? renderItemBuyContainer() : renderNotConectedContainer()}
         </main>
 
