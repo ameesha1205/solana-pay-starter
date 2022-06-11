@@ -7,14 +7,14 @@ export default function HeadComponent() {
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta name="theme-color" content="#000000" />
 
-      <title>Solana Pay Store</title>
-      <meta name="title" content="Solana Pay Store" />
-      <meta name="description" content="Buy items on my store using Solana Pay!" />
+      <title>Cartoon Pay</title>
+      <meta name="title" content="Cartoon Pay" />
+      <meta name="description" content="Buy items on my Cartoon Paystore using Solana!" />
 
       {/* Facebook */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://buildspace.so/" />
-      <meta property="og:title" content="Solana Pay Store" />
+      <meta property="og:title" content="Cartoon Pay" />
       <meta property="og:description" content="Buy items on my store using Solana Pay!" />
       <meta property="og:image" content="https://cdn.buildspace.so/courses/solana-pay/metadata.png" />
 
