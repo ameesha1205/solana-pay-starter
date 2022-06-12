@@ -4,6 +4,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 
 import HeadComponent from '../components/Head';
 import Product from "../components/Products";
+import CreateProduct from "../components/CreateProduct";
 
 // Constants
 const TWITTER_HANDLE = "ameeshaagrawal";
@@ -13,6 +14,8 @@ const App = () => {
 
   const { publicKey } = useWallet();
   const [products, setProducts] = useState([]);
+  const isOwner = (publicKey ? publicKey.toString() === process.env.NEXT_PUBLIC_OWNER_PUBLIC_KEY : false);
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     if (publicKey) {
@@ -49,9 +52,16 @@ const App = () => {
         <header className="header-container">
           <p className="header"> Cartoon Pay 🥳🐒 </p>
           <p className="sub-text">Enjoy with your kids 👧🏼</p>
+
+          {isOwner && (
+            <button className="create-product-button" onClick={() => setCreating(!creating)}>
+              {creating ? "Close" : "Create Product"}
+            </button>
+          )}
         </header>
 
         <main>
+          {creating && <CreateProduct />}
           {publicKey ? renderItemBuyContainer() : renderNotConectedContainer()}
         </main>
 

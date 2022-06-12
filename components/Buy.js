@@ -4,7 +4,7 @@ import { findReference, FindReferenceError } from "@solana/pay";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { InfinitySpin } from "react-loader-spinner";
 import IPFSDownload from "./IpfsDownload";
-import { addOrder } from "../lib/api";
+import { addOrder, hasPurchased, fetchItem } from "../lib/api";
 
 const STATUS = {
   Initial: "Initial",
@@ -17,6 +17,7 @@ export default function Buy({ itemID }) {
   const { publicKey, sendTransaction } = useWallet()
   const orderID = useMemo(() => Keypair.generate().publicKey, [])
 
+  const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(STATUS.Initial);
 
@@ -41,7 +42,7 @@ export default function Buy({ itemID }) {
     console.log("Tx data is", tx);
     try {
       const hash = await sendTransaction(tx, connection);
-      console.log(`Transaction sent: https://solscan.io/tx/${hash}?cluster=devnet`);
+      console.log(`Transaction sent: https://solscan.io/tx/${hash}?cluster=mainnet`);
       setStatus(STATUS.Submitted);
     } catch (error) {
       console.error(error);
@@ -76,9 +77,31 @@ export default function Buy({ itemID }) {
       return () => {
         clearInterval(interval);
       };
-
     }
+    async function getItem(itemID) {
+      const item = await fetchItem(itemID);
+      setItem(item);
+    }
+
+    if (status === STATUS.Paid) {
+      getItem(itemID);
+    }
+
   }, [status])
+
+  useEffect(() => {
+    // Check if this address already has already purchased this item
+    // If so, fetch the item and set paid to true
+    // Async function to avoid blocking the UI
+    async function checkPurchased() {
+      const purchased = await hasPurchased(publicKey, itemID);
+      if (purchased) {
+        setStatus(STATUS.Paid);
+        console.log("Address has already purchased this item!");
+      }
+    }
+    checkPurchased();
+  }, [publicKey, itemID]);
 
   if (!publicKey) {
     return (

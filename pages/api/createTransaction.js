@@ -9,8 +9,8 @@ import BigNumber from "bignumber.js";
 import products from "./products.json";
 import { createTransferCheckedInstruction, getAssociatedTokenAddress, getMint } from "@solana/spl-token";
 
-const usdcAddress = new PublicKey("Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr");
-const sellerAddress = "CTfEvFAYmXFnDcpvgwDtp9oSKSRA59yiBYQW71PKc1ad"
+const usdcAddress = new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
+const sellerAddress = "6uv3anmDrqtiNK6xPvaRfi7BziyYD25khAwp4f2k8aZJ"
 const sellerPublicKey = new PublicKey(sellerAddress)
 
 const createTransaction = async (req, res) => {
@@ -38,7 +38,7 @@ const createTransaction = async (req, res) => {
 
     const bigAmount = BigNumber(itemPrice);
     const buyerPublicKey = new PublicKey(buyer);
-    const network = WalletAdapterNetwork.Devnet;
+    const network = WalletAdapterNetwork.Mainnet;
     const endpoint = clusterApiUrl(network);
     const connection = new Connection(endpoint);
 
@@ -60,7 +60,7 @@ const createTransaction = async (req, res) => {
       usdcAddress,     // This is the address of the token we want to transfer
       shopUsdcAddress,
       buyerPublicKey,
-      bigAmount.toNumber() * 10 ** (await usdcMint).decimals,
+      bigAmount.toNumber() * 10 ** (usdcMint).decimals,
       usdcMint.decimals // The token could have any number of decimals
     );
 
