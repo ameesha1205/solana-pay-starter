@@ -1,8 +1,8 @@
 {
   "name": "@solana/wallet-adapter-nextjs-starter",
   "version": "0.8.2",
-  "author": "Solana Maintainers <maintainers@solana.foundation>",
-  "repository": "https://github.com/solana-labs/wallet-adapter",
+  "author": "Ameesha Agrawal",
+  "repository": "https://github.com/ameesha1205/solana-pay-starter",
   "license": "Apache-2.0",
   "files": [
     "src",
